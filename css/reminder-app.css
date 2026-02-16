@@ -1,0 +1,92 @@
+/* 文件: css/reminder-app.css (全新) */
+
+.reminder-list-actions {
+    padding: 0 15px 15px;
+    display: flex;
+    gap: 10px;
+    background: var(--light-blue-bg);
+}
+
+.reminder-list-actions .btn {
+    margin-top: 0;
+    padding: 12px;
+    font-size: 1rem;
+    border-radius: 12px;
+}
+
+#reminder-list-container {
+    padding: 15px;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+.reminder-category-section {
+    margin-bottom: 20px;
+}
+
+.reminder-category-header {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--light-blue-text);
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.delete-category-btn {
+    background: transparent;
+    border: none;
+    color: var(--danger-color);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0 5px;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+}
+.delete-category-btn:hover {
+    opacity: 1;
+}
+
+
+.reminder-item-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.reminder-item {
+    background: var(--capsule-bg);
+    padding: 18px 20px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.2s;
+}
+
+.reminder-item:hover {
+    background: rgba(255, 255, 255, 0.6);
+}
+
+.empty-category-info {
+    font-size: 0.9rem;
+    opacity: 0.6;
+    padding: 10px;
+    text-align: center;
+}
+
+#reminder-editor-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#reminder-editor-form .form-group textarea {
+    min-height: 150px;
+}
+
+#reminder-editor-actions {
+    margin-top: 10px;
+}

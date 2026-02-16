@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>BlueCoze</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/homescreen.css">
+    <link rel="stylesheet" href="css/settings.css">
+    <link rel="stylesheet" href="css/chat.css">
+    <link rel="stylesheet" href="css/offline-app-common.css">
+    <link rel="stylesheet" href="css/offline-app-autoreply.css">
+    <link rel="stylesheet" href="css/offline-app-randominfo.css">
+    <link rel="stylesheet" href="css/reminder-app.css">
+    <style id="dynamic-chat-styles"></style>
+    <!-- 【新增】用于主题、字体、壁纸的动态样式 -->
+    <style id="dynamic-theme-styles"></style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- 主屏幕 (ID: main-screen) -->
+    <div class="container" id="main-screen">
+        <header class="top-bar">
+            <div class="time-section"><div id="current-time">--:--</div></div>
+            <div class="info-section">
+                <div class="upper-info"><span class="separator">|</span><span id="temperature">18°C</span></div>
+                <div id="current-date">----年--月--日 星期-</div>
+            </div>
+        </header>
+        <main class="main-content">
+            <div class="upper-section"> 
+            <div class="left-panel">
+            <div class="memo-widget memo-bubble">
+                <textarea class="memo-input" placeholder="灵感记录..."></textarea>
+            </div>
+        </div>
+        <div class="right-panel">
+            <!-- 【修改】恢复图标原始颜色 -->
+            <div class="app-grid">
+                <a id="chat-app-icon" class="app-icon">
+                    <img id="img-icon-chat" src="https://placehold.co/130x130/ffffff/89b0d6?text=Coze" alt="Coze App">
+                    <span>Coze</span>
+                </a>
+                <a id="reminder-app-icon" class="app-icon">
+                    <img id="img-icon-reminder" src="https://placehold.co/130x130/ffffff/89b0d6?text=Reminder" alt="Reminder App">
+                    <span>Reminder</span>
+                </a>
+                <a id="offline-app-icon" class="app-icon">
+                    <img id="img-icon-offline" src="https://placehold.co/130x130/ffffff/89b0d6?text=Offline" alt="Offline App">
+                    <span>Offline</span>
+                </a>
+                <a class="app-icon">
+                    <img id="img-icon-notes" src="https://placehold.co/130x130/ffffff/89b0d6?text=Notes" alt="Notes App">
+                    <span>Notes</span>
+                </a>
+            </div>
+        </div>
+            </div>
+            <div class="bottom-section">
+                <div class="left-panel">
+                     <div class="app-grid">
+                        <a class="app-icon">
+                            <img id="img-icon-weather" src="https://placehold.co/130x130/ffffff/89b0d6?text=Weather" alt="Weather App">
+                            <span>Weather</span>
+                        </a>
+                        <a class="app-icon">
+                            <img id="img-icon-photos" src="https://placehold.co/130x130/ffffff/89b0d6?text=Photos" alt="Photos App">
+                            <span>Photos</span>
+                        </a>
+                        <a class="app-icon">
+                            <img id="img-icon-maps" src="https://placehold.co/130x130/ffffff/89b0d6?text=Maps" alt="Maps App">
+                            <span>Maps</span>
+                        </a>
+                        <a id="settings-app-icon" class="app-icon">
+                            <img id="img-icon-settings" src="https://placehold.co/130x130/ffffff/89b0d6?text=Settings" alt="Settings App">
+                            <span>Settings</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="right-panel">
+                    <div id="image-widget-container" class="image-widget">
+                        <input type="file" id="image-upload-input" accept="image/*"><img id="image-preview" src="https://placehold.co/300x300/bad7f2/ffffff?text=Click+to+Upload" alt="图片预览">
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 设置页面 (ID: settings-screen) -->
+    <div class="settings-page hidden" id="settings-screen">
+        <header class="settings-header">
+            <button class="back-btn" id="back-to-main-btn-from-settings">‹ 返回</button><h1>设置</h1>
+        </header>
+        <ul class="settings-list">
+            <li id="api-settings-option">API 设置</li>
+            <!-- 【新增】屏幕美化选项 -->
+            <li id="beautification-option">屏幕美化</li>
+            <li id="io-option">导入 / 导出</li>
+            <li id="memory-analysis-option">内存分析</li>
+        </ul>
+    </div>
+
+    <!-- 【新增】屏幕美化页面 -->
+    <div class="app-screen hidden" id="beautification-screen">
+        <header class="header">
+            <button class="back-btn" id="beautification-back-btn">‹ 设置</button>
+            <h1 class="title">屏幕美化</h1>
+        </header>
+        <div class="content" id="beautification-form-container">
+            <!-- JS会在此渲染内容 -->
+        </div>
+    </div>
+    
+    <!-- 内存分析页面 -->
+    <div class="app-screen hidden" id="memory-analysis-screen">
+        <header class="header">
+            <button class="back-btn" id="memory-analysis-back-btn">‹ 设置</button>
+            <h1 class="title">内存分析</h1>
+        </header>
+        <div class="content" id="memory-analysis-content">
+            <!-- JS会在此渲染内容 -->
+        </div>
+    </div>
+
+    <!-- API 设置模态框 -->  
+    <div class="modal-overlay hidden" id="modal-overlay"></div>
+    <div class="api-settings-modal hidden" id="api-settings-modal">
+        <header class="settings-header"><button class="back-btn" id="close-modal-btn">‹ 返回</button><h1>API 设置</h1></header>
+        <form id="api-form" class="api-form" onsubmit="return false;">
+            <div class="form-group"><label for="api-url">API 地址</label><input type="url" id="api-url" placeholder="例如: https://api.openai.com" required></div>
+            <div class="form-group"><label for="api-key">密钥</label><input type="password" id="api-key" placeholder="sk-..." required></div>
+            <div class="form-group"><label for="model-select">选择模型</label><div class="model-group"><select id="model-select" required><option value="">请先拉取模型列表</option></select><button id="fetch-models-btn" type="button">拉取</button></div></div>
+            <button id="save-api-settings-btn" type="submit" class="btn btn-save">保存设置</button>
+        </form>
+    </div>
+
+    <!-- 导入导出页面 (ID: io-screen) -->
+    <div class="app-screen hidden" id="io-screen">
+        <header class="header">
+            <button class="back-btn" id="io-back-btn">‹ 设置</button>
+            <h1 class="title">导入 / 导出</h1>
+        </header>
+        <div class="content">
+            <div class="io-container">
+                <p class="io-description">你可以导出所有应用数据（角色、聊天记录、API设置、用户设置）为一个备份文件，或从备份文件恢复。</p>
+                <div class="io-button" id="export-data-btn">导出全部数据</div>
+                <div class="io-button" id="import-data-btn">导入数据文件</div>
+                <input type="file" id="import-file-input" class="hidden" accept=".json">
+            </div>
+        </div>
+    </div>
+
+    <!-- ... (其他App页面保持不变) ... -->
+    <div class="app-screen hidden" id="chat-list-screen">
+        <header class="header">
+          <button class="back-btn" id="chat-list-back-btn">‹ 返回</button>
+          <h1 class="title">Coze</h1>
+          <button class="action-btn" id="new-character-btn">+</button>
+        </header>
+        <div class="chat-list" id="chat-list-container"></div>
+    </div>
+    
+    <!-- 【修改】重构Coze聊天界面底部，修复bug并增加新功能容器 -->
+    <div class="app-screen hidden" id="chat-interface-screen">
+        <header class="header">
+            <button class="back-btn" id="chat-interface-back-btn">‹</button>
+            <h1 class="title" id="chat-character-name">角色名</h1>
+        </header>
+        <div class="messages-container" id="messages-container"></div>
+        <div id="typing-indicator" class="hidden">正在输入中...</div>
+        <div class="chat-bottom-container">
+            <div class="chat-toolbox" id="online-chat-toolbox">
+                <div class="toolbox-item"><img src="https://placehold.co/80x80/ffffff/89b0d6?text=表情" alt="表情包"><span>表情包</span></div>
+                <div class="toolbox-item"><img src="https://placehold.co/80x80/ffffff/89b0d6?text=语音" alt="语音"><span>语音</span></div>
+                <div class="toolbox-item"><img src="https://placehold.co/80x80/ffffff/89b0d6?text=转账" alt="转账"><span>转账</span></div>
+                <div class="toolbox-item"><img src="https://placehold.co/80x80/ffffff/89b0d6?text=拍摄" alt="拍摄"><span>拍摄</span></div>
+                <div class="toolbox-item"><img src="https://placehold.co/80x80/ffffff/89b0d6?text=礼物" alt="礼物"><span>礼物</span></div>
+                <div class="toolbox-item"><img src="https://placehold.co/80x80/ffffff/89b0d6?text=名片" alt="名片"><span>名片</span></div>
+                <div class="toolbox-item"><img src="https://placehold.co/80x80/ffffff/89b0d6?text=链接" alt="链接"><span>链接</span></div>
+                <div class="toolbox-item"><img src="https://placehold.co/80x80/ffffff/89b0d6?text=过往" alt="过往"><span>过往</span></div>
+                <div class="toolbox-item"><img src="https://placehold.co/80x80/ffffff/89b0d6?text=位置" alt="位置"><span>位置</span></div>
+                <div class="toolbox-item"><img src="https://placehold.co/80x80/ffffff/89b0d6?text=外卖" alt="外卖"><span>外卖</span></div>
+                <div class="toolbox-item"><img src="https://placehold.co/80x80/ffffff/89b0d6?text=编辑" alt="编辑"><span>编辑</span></div>
+                <div class="toolbox-item"><img src="https://placehold.co/80x80/ffffff/89b0d6?text=重回" alt="重回"><span>重回</span></div>
+            </div>
+            <div class="chat-input-area">
+                <button id="api-reply-btn"><img src="https://img.icons8.com/pastel-glyph/64/3a5f82/robot.png" alt="API Reply"></button>
+                <input type="text" id="chat-message-input" placeholder="输入消息...">
+                <button id="send-message-btn">➤</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="app-screen hidden" id="chat-settings-screen">
+        <header class="header">
+            <button class="back-btn" id="chat-settings-back-btn">‹ 返回</button>
+            <h1>聊天设置</h1>
+        </header>
+        <div class="content">
+            <form id="chat-settings-form" onsubmit="return false;"></form>
+        </div>
+    </div>
+
+    <div class="app-screen hidden" id="character-settings-screen">
+        <header class="header">
+            <button class="back-btn" id="char-settings-back-btn">‹ 返回</button>
+            <h1>角色设置</h1>
+        </header>
+        <div class="content">
+            <form id="character-form" onsubmit="return false;"></form>
+        </div>
+    </div>
+    
+    <div class="app-screen hidden" id="user-settings-screen">
+        <header class="header">
+            <button class="back-btn" id="user-settings-back-btn">‹ 返回</button>
+            <h1>我的设置</h1>
+        </header>
+        <div class="content">
+            <form id="user-settings-form" onsubmit="return false;"></form>
+        </div>
+    </div>
+
+    <div class="schedule-editor-overlay hidden" id="schedule-editor-overlay">
+        <div class="schedule-editor-modal">
+            <header class="header">
+                <button class="back-btn" id="schedule-editor-close-btn">‹ 完成</button>
+                <h1 class="title">编辑日程</h1>
+            </header>
+            <div class="content" id="schedule-editor-content"></div>
+        </div>
+    </div>
+
+    <div class="app-screen hidden" id="offline-character-list-screen">
+        <header class="header">
+            <button class="back-btn" id="offline-char-list-back-btn">‹ 返回</button>
+            <h1 class="title">Offline</h1>
+        </header>
+        <div class="content" id="offline-character-grid-container"></div>
+    </div>
+
+    <div class="app-screen hidden" id="offline-character-hub-screen">
+        <header class="header">
+            <button class="back-btn" id="offline-hub-back-btn">‹ 角色列表</button>
+            <h1 class="title" id="offline-hub-char-name"></h1>
+        </header>
+        <div class="hub-content">
+            <div class="hub-grid">
+                <div id="hub-btn-1" class="hub-large-btn">自动回复</div>
+                <div id="hub-btn-2" class="hub-large-btn">离线语录</div>
+                <div id="hub-btn-3" class="hub-large-btn">随机信息</div>
+                <div id="hub-btn-4" class="hub-large-btn">笑话合集</div>
+            </div>
+            <div id="hub-btn-5" class="hub-center-btn">IN</div>
+        </div>
+    </div>
+
+    <div class="app-screen hidden" id="offline-feature-1-screen">
+        <header class="header">
+            <button class="back-btn" id="offline-feature-1-back-btn">‹ 返回</button>
+            <h1 class="title">自动回复</h1>
+        </header>
+        <div class="content" id="auto-reply-main-content"></div>
+    </div>
+    
+    <div class="app-screen hidden" id="offline-auto-reply-editor-screen">
+        <header class="header">
+            <button class="back-btn" id="auto-reply-editor-back-btn">‹ 返回</button>
+            <h1 class="title">自动回复库</h1>
+        </header>
+        <div class="content" id="auto-reply-editor-content"></div>
+    </div>
+
+    <div class="app-screen hidden" id="offline-feature-2-screen">
+        <header class="header">
+            <button class="back-btn" id="offline-feature-2-back-btn">‹ 返回</button>
+            <h1 class="title">离线语录</h1>
+        </header>
+    </div>
+
+    <div class="app-screen hidden" id="offline-feature-3-screen">
+        <header class="header">
+            <button class="back-btn" id="offline-feature-3-back-btn">‹ 返回</button>
+            <h1 class="title">随机信息</h1>
+        </header>
+        <div class="content" id="random-info-main-content"></div>
+    </div>
+
+    <div class="app-screen hidden" id="offline-random-info-library-screen">
+        <header class="header">
+            <button class="back-btn" id="random-info-library-back-btn">‹ 返回</button>
+            <h1 class="title">随机信息库</h1>
+        </header>
+        <div class="content" id="random-info-library-container"></div>
+    </div>
+
+    <div class="app-screen hidden" id="offline-feature-4-screen">
+        <header class="header">
+            <button class="back-btn" id="offline-feature-4-back-btn">‹ 返回</button>
+            <h1 class="title">笑话合集</h1>
+        </header>
+    </div>
+    
+    <div class="app-screen hidden" id="offline-chat-screen">
+        <header class="header">
+            <button class="back-btn" id="offline-chat-back-btn">‹ 功能中心</button>
+            <h1 class="title" id="offline-chat-char-name">角色名</h1>
+        </header>
+        <div class="messages-container" id="offline-messages-container">
+            <!-- 离线消息将通过JS注入这里 -->
+        </div>
+        <div class="offline-chat-input-container" id="offline-chat-input-container">
+            <div class="offline-chat-options" id="offline-chat-options">
+                <div class="option-item" data-option="auto-reply">
+                    <img src="https://img.icons8.com/ios-filled/50/3a5f82/message-robot.png" alt="自动回复"/>
+                    <span>自动回复</span>
+                </div>
+                <div class="option-item" data-option="quotes">
+                    <img src="https://img.icons8.com/ios-filled/50/3a5f82/quote-left.png" alt="离线语录"/>
+                    <span>离线语录</span>
+                </div>
+                <div class="option-item" data-option="random-info">
+                    <img src="https://img.icons8.com/ios-filled/50/3a5f82/dice.png" alt="随机信息"/>
+                    <span>随机信息</span>
+                </div>
+                <div class="option-item" data-option="jokes">
+                     <img src="https://img.icons8.com/ios-filled/50/3a5f82/lol.png" alt="笑话合集"/>
+                    <span>笑话合集</span>
+                </div>
+            </div>
+            <div class="chat-input-area">
+                <button id="offline-chat-plus-btn">＋</button>
+                <input type="text" id="offline-chat-message-input" placeholder="离线模式...">
+                <button id="offline-send-message-btn">➤</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="app-screen hidden" id="reminder-app-list-screen">
+        <header class="header">
+            <button class="back-btn" id="reminder-list-back-btn">‹ 返回</button>
+            <h1 class="title">Reminder</h1>
+            <button class="action-btn" id="add-new-reminder-item-btn">+</button>
+        </header>
+        <div class="reminder-list-actions">
+            <button class="btn btn-save" id="add-new-reminder-category-btn">新建分类</button>
+        </div>
+        <div id="reminder-list-container"></div>
+    </div>
+    
+    <div class="app-screen hidden" id="reminder-item-editor-screen">
+        <header class="header">
+            <button class="back-btn" id="reminder-editor-back-btn">‹ 返回</button>
+            <h1 class="title" id="reminder-editor-title">新建条目</h1>
+        </header>
+        <div class="content">
+            <form id="reminder-editor-form">
+                <div class="form-group"><label for="itemName">条目名称</label><input type="text" id="itemName" name="itemName" required></div>
+                <div class="form-group"><label for="itemCategory">所属分类</label><select id="itemCategory" name="itemCategory"></select></div>
+                <div class="form-group"><label for="itemType">条目类型</label><select id="itemType" name="itemType"><option value="worldview">世界观</option><option value="prompt">提示词</option><option value="chat_hint">聊天提示</option></select></div>
+                <div class="form-group"><label for="itemContent">条目内容</label><textarea id="itemContent" name="itemContent"></textarea></div>
+                <div id="reminder-editor-actions"><button type="submit" class="btn btn-save">保存条目</button><button type="button" class="btn btn-danger hidden" id="delete-reminder-item-btn">删除条目</button></div>
+            </form>
+        </div>
+    </div>
+
+    <div class="actionsheet-overlay hidden" id="character-options-overlay"></div>
+    <div class="actionsheet-container" id="character-options-actionsheet">
+        <div class="actionsheet-options"><button class="actionsheet-option" id="goto-char-settings-btn">角色设置</button><button class="actionsheet-option" id="goto-user-settings-btn">我的设置</button><button class="actionsheet-option" id="goto-chat-settings-btn">聊天设置</button></div>
+        <button class="actionsheet-cancel" id="character-options-cancel-btn">取消</button>
+    </div>
+
+    <!-- 引入所有 JS 文件 (注意顺序) -->
+    <script src="js/config.js"></script>
+    <script src="js/ui-core.js"></script>
+    <script src="js/ui-chat.js"></script>
+    <script src="js/ui-settings.js"></script>
+    <script src="js/main-screen.js"></script>
+    <script src="js/api-settings.js"></script>
+    <script src="js/chat-app.js"></script>
+    <script src="js/io.js"></script> 
+    <script src="js/offline-app-core.js"></script>
+    <script src="js/offline-app-autoreply.js"></script>
+    <script src="js/offline-app-randominfo.js"></script>
+    <script src="js/offline-app.js"></script>
+    <script src="js/reminder-app.js"></script>
+    <!-- 【新增】屏幕美化功能的JS -->
+    <script src="js/beautification.js"></script>
+    <script src="js/main.js"></script>
+
+</body>
+</html>

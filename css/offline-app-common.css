@@ -1,0 +1,136 @@
+/* 文件: css/offline-app-common.css (新) */
+
+/* --- Offline App 角色列表网格 --- */
+#offline-character-grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    padding: 15px;
+    overflow-y: auto;
+    flex-grow: 1;
+    align-content: start;
+}
+
+/* 角色胶囊样式 */
+.offline-char-capsule {
+    background: var(--capsule-bg);
+    border-radius: 20px; 
+    aspect-ratio: 1 / 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+    text-align: center;
+    overflow: hidden;
+}
+.offline-char-capsule:hover {
+    background: rgba(255, 255, 255, 0.6);
+    transform: scale(1.05);
+}
+.offline-char-capsule img {
+    width: 60%;
+    height: 60%;
+    max-width: 50px;
+    max-height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.offline-char-capsule .name {
+    margin-top: 8px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--light-blue-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+
+/* --- 功能中心 (Hub) 界面 --- */
+.hub-content {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    position: relative;
+}
+.hub-grid {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 20px;
+}
+.hub-large-btn {
+    background: var(--capsule-bg);
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--light-blue-text);
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+.hub-large-btn:hover {
+    background: rgba(255, 255, 255, 0.6);
+    transform: scale(1.03);
+}
+.hub-center-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90px;
+    height: 90px;
+    background: var(--widget-bg);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--light-blue-text);
+    cursor: pointer;
+    border: 4px solid var(--light-blue-bg);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+.hub-center-btn:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+/* --- 通用功能页样式 --- */
+.offline-feature-card {
+    background: var(--capsule-bg);
+    padding: 20px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+}
+.offline-feature-card p {
+    line-height: 1.6;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+    opacity: 0.8;
+}
+.offline-feature-card p:last-of-type {
+    margin-bottom: 0;
+}
+.offline-feature-card .stats {
+    font-weight: 600;
+    opacity: 1;
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 1rem;
+}
+.empty-list-info {
+    text-align: center;
+    padding: 40px 20px;
+    opacity: 0.7;
+}

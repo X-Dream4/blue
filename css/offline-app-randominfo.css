@@ -1,0 +1,124 @@
+/* 文件: css/offline-app-randominfo.css (已修改) */
+
+/* --- 随机信息主页面样式 --- */
+#random-info-main-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.random-info-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.random-info-actions .btn {
+    margin-top: 0;
+}
+
+.random-info-summary {
+    background: var(--capsule-bg);
+    padding: 20px;
+    border-radius: 20px;
+    text-align: center;
+}
+
+.random-info-summary .count {
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: var(--light-blue-text);
+}
+
+.random-info-summary .label {
+    font-size: 0.9rem;
+    opacity: 0.7;
+    margin-top: 5px;
+}
+
+/* --- 随机信息库页面样式 --- */
+#random-info-library-container {
+    padding: 15px;
+    overflow-y: auto;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* 增加分类之间的间距 */
+}
+
+/* 【修改】分类组作为卡片容器 */
+.info-category-group {
+    border-radius: 20px;
+    background: var(--capsule-bg);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* 标题和内容之间的间距 */
+}
+
+/* 【新增】分类标题样式 */
+.info-category-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+    color: var(--light-blue-text);
+}
+
+/* 【修改】内容区域不再需要额外内边距 */
+.info-category-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* 条目之间的间距 */
+}
+
+/* 【修改】条目样式，使用更柔和的背景和边框 */
+.info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 15px;
+}
+
+.info-item textarea {
+    flex-grow: 1;
+    border: none;
+    background: transparent;
+    font-size: 0.95rem;
+    color: var(--light-blue-text);
+    min-height: 50px;
+    resize: vertical;
+    outline: none;
+    padding: 5px;
+}
+
+.info-item .delete-info-btn {
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(0,0,0,0.08);
+    color: var(--light-blue-text);
+    opacity: 0.7;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1.2rem;
+    margin-top: 5px;
+    line-height: 30px;
+    text-align: center;
+}
+
+/* 底部操作按钮样式 (保持不变) */
+.info-library-actions {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: var(--light-blue-bg);
+    position: sticky;
+    bottom: -15px; /* stick to bottom of content padding */
+    margin: 0 -15px -15px; /* fill horizontal space and overlap bottom padding */
+}

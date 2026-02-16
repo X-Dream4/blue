@@ -1,0 +1,108 @@
+/* --- 全局基础样式、变量 --- */
+:root {
+    --light-blue-bg: #bad7f2;
+    --light-blue-text: #3a5f82;
+    --capsule-bg: rgba(255, 255, 255, 0.35);
+    --widget-bg: rgba(255, 255, 255, 0.5);
+    /* 【修改】更新按钮颜色以匹配主题 */
+    --danger-color: #e57373; /* 柔和的珊瑚红 */
+    --success-color: #60c5a0; /* 柔和的薄荷绿 */
+}
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: var(--light-blue-bg);
+    color: var(--light-blue-text);
+}
+.hidden {
+    display: none !important;
+}
+.btn {
+    width: 100%;
+    padding: 15px;
+    margin-top: 10px;
+    border: none;
+    color: white;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.btn-save {
+    background: var(--success-color);
+}
+.btn-save:hover {
+    background: #52ad8c; /* 悬停时稍微加深 */
+}
+.btn-danger {
+    background: var(--danger-color);
+}
+.btn-danger:hover {
+    background: #e06363; /* 悬停时稍微加深 */
+}
+.form-group {
+    margin-bottom: 18px;
+}
+.form-group label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+    opacity: 0.8;
+}
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: #fff;
+    font-size: 1rem;
+    color: #333;
+}
+.form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* 【新增】圆润可爱的输入框和选择框样式 */
+.themed-input {
+    width: 100%;
+    padding: 10px 20px;
+    border-radius: 25px; /* 非常圆润的边角 */
+    border: none;
+    background: var(--capsule-bg);
+    font-size: 0.9rem;
+    color: var(--light-blue-text);
+    outline: none;
+    transition: background 0.2s;
+    backdrop-filter: blur(2px);
+}
+.themed-input::placeholder {
+    color: var(--light-blue-text);
+    opacity: 0.6;
+}
+.themed-input:focus {
+    background: rgba(255, 255, 255, 0.6);
+}
+
+select.themed-input {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%233a5f82%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.4-12.8z%22/%3E%3C/svg%3E');
+    background-repeat: no-repeat;
+    background-position: right 18px center;
+    background-size: 10px;
+    padding-right: 40px;
+    cursor: pointer;
+}

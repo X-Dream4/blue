@@ -1,0 +1,55 @@
+/* 文件: css/offline-app-autoreply.css (新) */
+
+/* --- 自动回复功能页容器 --- */
+#auto-reply-main-content {
+    padding: 20px;
+}
+
+/* --- 自动回复编辑器样式 --- */
+#auto-reply-editor-content {
+    padding: 15px;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+.auto-reply-editor-item {
+    background: var(--capsule-bg);
+    padding: 20px;
+    border-radius: 20px;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.auto-reply-editor-item .form-group {
+    margin-bottom: 15px;
+}
+
+.auto-reply-editor-item .form-group:last-of-type {
+    margin-bottom: 0;
+}
+
+.auto-reply-editor-item textarea {
+    min-height: 80px;
+}
+
+.delete-auto-reply-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.1);
+    color: var(--light-blue-text);
+    font-size: 1.5rem;
+    line-height: 30px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.editor-actions {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
